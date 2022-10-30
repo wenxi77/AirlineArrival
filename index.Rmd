@@ -1,6 +1,6 @@
 --- 
-title: "YOUR TITLE HERE"
-author: "YOUR NAMES HERE"
+title: "Final Project-Airline Arrival"
+author: "Wenxi Zhang, Ziwei Yang, Siyuan Ding"
 date: "`r Sys.Date()`"
 site: bookdown::bookdown_site
 ---
