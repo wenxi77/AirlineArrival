@@ -118,19 +118,19 @@
 <p><strong>What data source we chose and why:</strong></p>
 <p>Initially, we found the Airline Reporting Carrier On-Time Performance DataSet on IBM. Then according to the original source listed on IBM, we traced the data source to the Bureau of Transportation Statistics(BTS). With quick googling about BTS, we realized that all statistics regarding transportations are published there, so we decided to use BTS as our data source. On the BTS website, there are tons of databases, since we are interested in airline on-time performance, we chose the Airline On-Time Performance Data as the data set for this project.</p>
 <p><strong>Institution that maintains the data source:</strong></p>
-<pre><code>The Bureau of Transportation Statistics, part of The Department of Transportation, is the institution that maintains the data source.</code></pre>
+<p>The Bureau of Transportation Statistics, part of The Department of Transportation, is the institution that maintains the data source.</p>
 <p><strong>How the data being collected: </strong></p>
 <p>The data are collected by carriers reporting information regarding on-time performance and causes of cancellations and delays for the flights they operate by month and year to The Department of Transportation.</p>
 <p><strong>Frequency of data updates and time range of data being considered for this project:</strong></p>
-<pre><code>The Department of Transportation publishes a monthly summary of airline on-time performance. Thus the data set is updated monthly. The data has been collected since 1987 with the latest update in August 2022. Since the cause of delays was not reported to BTS until 2003, data before that will not be taken into consideration for this project.</code></pre>
+<p>The Department of Transportation publishes a monthly summary of airline on-time performance. Thus the data set is updated monthly. The data has been collected since 1987 with the latest update in August 2022. Since the cause of delays was not reported to BTS until 2003, data before that will not be taken into consideration for this project.</p>
 <p><strong>Available data format:</strong></p>
 <p>The data can be downloaded from the BTS website with filters for which years, months, states and features to include. The downloaded data format is csv files.</p>
 <p><strong>How to import the data:</strong></p>
-<pre><code>We need to download the data from the BTS website. It seems like we can only download data for one month at one time. Therefore, in order to analyze the trend between months and years, we need to combine the different months data together after downloading. Since the data format is csv files, we can import and read data through the read.csv() function in R. </code></pre>
+<p>We need to download the data from the BTS website. It seems like we can only download data for one month at one time. Therefore, in order to analyze the trend between months and years, we need to combine the different months data together after downloading. Since the data format is csv files, we can import and read data through the read.csv() function in R.</p>
 <p><strong>Contact information for questions on data:</strong></p>
-<pre><code>If we have any questions regarding the data, we can contact The Bureau of Transportation Statistics. The contact information is listed under the contact us page with office location, office hour schedule, and phone number. </code></pre>
+<p>If we have any questions regarding the data, we can contact The Bureau of Transportation Statistics. The contact information is listed under the contact us page with office location, office hour schedule, and phone number.</p>
 <p><strong>Issues regarding the data:</strong></p>
-<pre><code>There are no known issues relating to the data quality. However, the data set is extremely large, so it’s going to take a huge amount of time to download and to subset the data for better analysis in terms of efficiency. </code></pre>
+<p>There are no known issues relating to the data quality. However, the data set is extremely large, so it’s going to take a huge amount of time to download and to subset the data for better analysis in terms of efficiency.</p>
 <p><strong>Citations to the data source:</strong></p>
 <p>Link to data set description: <a href="https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ" class="uri">https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ</a>
 Link to download page: <a href="https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr" class="uri">https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&amp;QO_fu146_anzr=b0-gvzr</a></p>
