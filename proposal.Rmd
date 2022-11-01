@@ -43,7 +43,7 @@ There are no known issues relating to the data quality. However, the data set is
 
 **Citations to the data source:**
 
-Link to data set description: https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ \
+Link to data set description: https://www.transtats.bts.gov/Fields.asp?gnoyr_VQ=FGJ 
 Link to download page: https://www.transtats.bts.gov/DL_SelectFields.aspx?gnoyr_VQ=FGJ&QO_fu146_anzr=b0-gvzr
 
 
