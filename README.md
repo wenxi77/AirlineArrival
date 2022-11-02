@@ -1,6 +1,6 @@
 ## Project Description
 
-This project is based on "Airline On-Time Performance Data" which contains information on approximately 200 million domestic US flights reported to the United States Bureau of Transportation Statistics. The dataset contains basic information about each flight (such as date, time, departure airport, arrival airport) and, if applicable, the amount of time the flight was delayed and information about the reason for the delay. We will use a subset of samples(flights) to analyze the likelihood for a flight to arrive on time. 
+Beginning in June 2003, airlines started to report information on ariline on-time performance along with causes of delays in five broad categories: air carrier, extreme weather, national aviation system, late-arrival aircraft, and security. All these information are published by the Bureau of Transportation Statistics(BTS) monthly. This project uses these information, and more specifically it is based on the "Airline On-Time Performance Data" database on the BTS websites to perform an exploratory data analysis to find underlying relationships between airline on-time performance and other factors. 
 
 Book URL: [wenxi77.github.io/AirlineArrival/](https://wenxi77.github.io/AirlineArrival/)
 
