@@ -4,5 +4,58 @@
 
 ## Cleaning / transformation
 
+The Bureau of Transportation Statistics(BTS) separated data into months where each month contains near to a million data. Since we don't want to analyze and explore that amount of data, this function is used to randomly sample data from each month and stored into csv files for later use. 
+
+```{r, echo = TRUE, eval = FALSE}
+# generate random sample for each month
+generate_sample <- function(years, months, sample_size) {
+  for (year in years) {
+    for (month in months) {
+      filename <- paste(year, month, 'csv', sep='.')
+      df <- read.csv(file=paste('..', 'data', filename, sep='/'))
+      random_index <- sample.int(dim(df)[1], sample_size)
+      df_sample <- df[random_index, ]
+      write.csv(df_sample, file=paste('..', 'pre-processed data', filename, sep='/'))
+    }
+  }
+}
+```
+
+This function is used to combine the sample data from each month together to create a new data set that contains data from all time period. 
+
+```{r, echo = TRUE, eval = FALSE}
+# combine data from each month and year
+combine_data <- function(years, months) {
+  for (year in years) {
+    for (month in months) {
+      filename <- paste(year, month, 'csv', sep='.')
+      df <- read.csv(file=paste('..', 'pre-processed data', filename, sep='/'))
+      if (year == years[1] & month == months[1]){
+        df_combine <- df
+      } else {
+        df_combine <- rbind(df_combine, df)
+      }
+    }
+  }
+  filename <- paste(paste(years[1], tail(years,1), sep='-'), 'csv', sep='.')
+  write.csv(df_combine, file=paste('..', 'pre-processed data', filename, sep='/'))
+}
+```
+
+We decided to choose data from year 2018 to 2021 with all months and sample size of 1000 for each month. 
+
+```{r, echo = TRUE, eval = FALSE}
+years <- c('2018', '2019', '2020', '2021')
+months <- c('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')
+sample_size <- 1000
+```
+
+We call the two functions here. The result combined data set has 48000 rows.
+
+```{r, echo = TRUE, eval = FALSE}
+generate_sample(years, months, sample_size)
+combine_data(years, months)
+```
+
 ## Missing value analysis
 
