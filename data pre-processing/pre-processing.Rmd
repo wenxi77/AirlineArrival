@@ -1,0 +1,56 @@
+
+
+```{r}
+# generate random sample for each month
+generate_sample <- function(years, months, sample_size) {
+  for (year in years) {
+    if (year == tail(years, 1)) {
+      months <- months[1:9]
+    }
+    for (month in months) {
+      filename <- paste(year, month, 'csv', sep='.')
+      df <- read.csv(file=paste('..', 'data', filename, sep='/'))
+      random_index <- sample.int(dim(df)[1], sample_size)
+      df_sample <- df[random_index, ]
+      write.csv(df_sample, file=paste('..', 'pre-processed data', filename, sep='/'))
+    }
+  }
+}
+```
+
+```{r}
+# combine data from each month and year
+combine_data <- function(years, months) {
+  for (year in years) {
+    if (year == tail(years, 1)) {
+      months <- months[1:9]
+    }
+    for (month in months) {
+      filename <- paste(year, month, 'csv', sep='.')
+      df <- read.csv(file=paste('..', 'pre-processed data', filename, sep='/'))
+      if (year == years[1] & month == months[1]){
+        df_combine <- df
+      } else {
+        df_combine <- rbind(df_combine, df)
+      }
+    }
+  }
+  filename <- paste(paste(years[1], tail(years,1), sep='-'), 'csv', sep='.')
+  write.csv(df_combine, file=paste('..', 'pre-processed data', filename, sep='/'))
+}
+```
+
+```{r}
+years <- c('2018', '2019', '2020', '2021', '2022')
+months <- c('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')
+sample_size <- 1000
+```
+
+```{r}
+generate_sample(years, months, sample_size)
+```
+
+```{r}
+combine_data(years, months)
+```
+
