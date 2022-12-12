@@ -4,7 +4,7 @@
 # generate random sample for each month
 generate_sample <- function(years, months, sample_size) {
   for (year in years) {
-    if (year == tail(years, 1)) {
+    if (year == '2022') {
       months <- months[1:9]
     }
     for (month in months) {
@@ -22,7 +22,7 @@ generate_sample <- function(years, months, sample_size) {
 # combine data from each month and year
 combine_data <- function(years, months) {
   for (year in years) {
-    if (year == tail(years, 1)) {
+    if (year == '2022') {
       months <- months[1:9]
     }
     for (month in months) {
@@ -51,6 +51,11 @@ generate_sample(years, months, sample_size)
 ```
 
 ```{r}
+combine_data(years, months)
+```
+
+```{r}
+years <- c('2018', '2019', '2020', '2021')
 combine_data(years, months)
 ```
 
