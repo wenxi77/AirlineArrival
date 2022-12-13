@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <title>Chapter 3 Data | Final Project-Airline Arrival</title>
   <meta name="description" content="Chapter 3 Data | Final Project-Airline Arrival" />
-  <meta name="generator" content="bookdown 0.27 and GitBook 2.6.7" />
+  <meta name="generator" content="bookdown 0.30 and GitBook 2.6.7" />
 
   <meta property="og:title" content="Chapter 3 Data | Final Project-Airline Arrival" />
   <meta property="og:type" content="book" />
@@ -23,7 +23,7 @@
 <meta name="author" content="Wenxi Zhang, Ziwei Yang, Siyuan Ding" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-12" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -110,12 +110,38 @@
 <h1><span class="header-section-number">Chapter 3</span> Data<a href="data.html#data" class="anchor-section" aria-label="Anchor link to header"></a></h1>
 <div id="sources" class="section level2 hasAnchor" number="3.1">
 <h2><span class="header-section-number">3.1</span> Sources<a href="data.html#sources" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Institution that is responsible for collecting the data:</strong></p>
+<p>The institution that is responsible for collecting the data is The Bureau of Transportation Statistics(BTS), which is part of The Department of Transportation.</p>
+<p><strong>How is data collected:</strong></p>
+<p>BTS collects data by requiring airlines to report each flight’s information, and later displaying these information on its website.</p>
+<p><strong>What data source we chose and why:</strong></p>
+<p>Initially, we found the Airline Reporting Carrier On-Time Performance DataSet on IBM. Then according to the original source listed on IBM, we traced the data source to the Bureau of Transportation Statistics(BTS). With quick googling about BTS, we realized that all statistics regarding transportations are published there, so we decided to use BTS as our data source. On the BTS website, there are tons of databases, since we are interested in airline on-time performance, we chose the Airline On-Time Performance Data as the data set for this project.</p>
+<p><strong>Basic information about the data:</strong></p>
+<p>BTS provides flights’ on-time performance data on its website, and one can download the data in csv file for each month. We downloaded data from January 2018 to December 2021. Data for year 2022 is not downloaded because BTS only has data available to September 2022. Then data on the website contains over 100 features, we included 48 of them that we think are worth to explore. Therefore, out data set has 48 columns. Then each month contains near to a million data, which is too much for exploring. Therefore, we randomly sampled 1000 data from each month and combined data them together. With 1000 data from each month and 48 months from four years, out final data set has size of 48000 rows and 48 columns.</p>
+<p><strong>Issues/problems about the data:</strong></p>
+<p>There are no known issues about the data. After we explored the data, there was one issue we found: more than 75% of data do not have values about the reason for why a flight was delayed.</p>
 </div>
 <div id="cleaning-transformation" class="section level2 hasAnchor" number="3.2">
 <h2><span class="header-section-number">3.2</span> Cleaning / transformation<a href="data.html#cleaning-transformation" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>BTS provides flights’ on-time performance data on its website, and one can download the data in csv file for each month.<br />
+We have one step for data cleaning and two steps for data transformation:<br />
+1. For data cleaning, we did this step when downloading data from the website. Then data on the website contains over 100 features, we included 48 of them that we think are worth to explore.<br />
+2. For data transformation, the step was randomly sampled 1000 data from each month. We did this because the original data has near to a million data for each month, which is too large for exploring.<br />
+3. For data transformation, the second and the last step was combine data from each month together. Since we downloaded data from January 2018 to December 2021, the resulting data set has 48000 rows and 48 columns.</p>
 </div>
 <div id="missing-value-analysis" class="section level2 hasAnchor" number="3.3">
 <h2><span class="header-section-number">3.3</span> Missing value analysis<a href="data.html#missing-value-analysis" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-8-1.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-2.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-3.png" width="672" /><img src="finalproj_files/figure-html/unnamed-chunk-8-4.png" width="672" /></p>
+<p>Since the data set contains 48000 rows, which is too much for plotting, we chose data from four different months with different quarters and different years. The four plots above are from 2018.01, 2019.04, 2020.07, and 2021.10 respectively.</p>
+<p>There are two patterns appeared are all four plots:<br />
+The first pattern is that most data has missing values on features carrier, weather, nas dela, security, and late air. These five features are actually the five possible reasons why a flight was delayed, and clearly if one reason is missing, all other reasons are missing as well. This is probably because the reason for a flight’s delay is either reported or not.<br />
+The second pattern is related to columns about a flight’s departure and arrival performance. If one column about flight’s departure and arrival performance, then all other columns about that are also missing. That is probably because those flights’ performance were not reported at all.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p>Since the data set has 48 variables, which will cause column names to overlapping, we assigned alphabetic letters as abbreviations to each column. Then we referred back to the assignment when analyzing the missing value patterns.</p>
+<p>There are nine patterns displayed by plot_missing functions. However according to number of rows each pattern has, only top three patterns are worth to analyze.<br />
+The first pattern is that there are five columns tend to miss at the same time, and these five columns are actually the five possible reasons for a flight’s delay. There are more than 75% data/rows have this pattern.<br />
+The second pattern is actually no columns are missing. There are about 15% of data/rows has this pattern, which means about 15% of data have values on all features.<br />
+The third pattern is related to columns about a flight’s departure and arrival performance. If one column about flight’s departure and arrival performance, then all other columns about that are also missing. There are about 1% of data/row has this pattern.</p>
 
 </div>
 </div>
