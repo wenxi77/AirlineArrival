@@ -7,3 +7,15 @@ site: bookdown::bookdown_site
 
 # Introduction
 
+**Background:**
+
+The Bureau of Transportation Statistics(BTS), part of The Department of Transportation, is responsible for collecting and displaying information regarding transportation. Since 1987, BTS started to require airlines to report flight information, especially flight on-time performance. The flight on-time performance contains information about flight's status including departure and arrival performance and potential delays. Those information are posted on the BTS website monthly for public usage. 
+
+**Why this topic:**
+
+As a group of intentional students, our team takes the air plane often, and had met the flight delay many times. Therefore, we are interested in what factors are related to flight delay, and want to be able to somehow predict the flight delay in out later life by exploring the flight on-time performance data.
+
+**Questions we are looking for:**
+
+1. Among all the factors provided by BTS, which of them contributed to the flight delay the most? In other words, find underlying relationships between airline on-time performance and other factors.  
+2. Is flight delay time related in terms of month, quarter, and year?
