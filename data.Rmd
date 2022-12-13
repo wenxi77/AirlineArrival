@@ -24,9 +24,7 @@ There are no known issues about the data. After we explored the data, there was 
 
 ## Cleaning / transformation
 
-The Bureau of Transportation Statistics(BTS) separated data into months where each month contains near to a million data. Since we don't want to analyze and explore that amount of data, this function is used to randomly sample data from each month and stored into csv files for later use. 
-
-```{r, echo = TRUE, eval = FALSE}
+```{r, eval = FALSE}
 # generate random sample for each month
 generate_sample <- function(years, months, sample_size) {
   for (year in years) {
@@ -41,9 +39,7 @@ generate_sample <- function(years, months, sample_size) {
 }
 ```
 
-This function is used to combine the sample data from each month together to create a new data set that contains data from all time period. 
-
-```{r, echo = TRUE, eval = FALSE}
+```{r, eval = FALSE}
 # combine data from each month and year
 combine_data <- function(years, months) {
   for (year in years) {
@@ -62,20 +58,22 @@ combine_data <- function(years, months) {
 }
 ```
 
-We decided to choose data from year 2018 to 2021 with all months and sample size of 1000 for each month. 
-
-```{r, echo = TRUE, eval = FALSE}
+```{r, eval = FALSE}
 years <- c('2018', '2019', '2020', '2021')
 months <- c('01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12')
 sample_size <- 1000
 ```
 
-We call the two functions here. The result combined data set has 48000 rows.
-
-```{r, echo = TRUE, eval = FALSE}
+```{r, eval = FALSE}
 generate_sample(years, months, sample_size)
 combine_data(years, months)
 ```
+
+BTS provides flights' on-time performance data on its website, and one can download the data in csv file for each month.  
+We have one step for data cleaning and two steps for data transformation:  
+1. For data cleaning, we did this step when downloading data from the website. Then data on the website contains over 100 features, we included 48 of them that we think are worth to explore.  
+2. For data transformation, the step was randomly sampled 1000 data from each month. We did this because the original data has near to a million data for each month, which is too large for exploring.  
+3. For data transformation, the second and the last step was combine data from each month together. Since we downloaded data from January 2018 to December 2021, the resulting data set has 48000 rows and 48 columns.
 
 ## Missing value analysis
 
