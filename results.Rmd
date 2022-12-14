@@ -14,7 +14,6 @@ df <- df[-c(1,2)]
 
 
 
-
 Since we want to investigate the general trend of delay correlated with different time of a year (quarters) and different airlines, here we pick the top 5 airlines that appear most during 2018-2021 in our data set. They are AA (American Airlines), DL (Delta Air Lines), OO (SkyWest Airlines), UA (	United Air Lines), WN (Southwest Airlines). Below the mosaic plot shows the relationship between arrival delay or not, the 5 airlines and quarters.
 
 ```{r}
@@ -64,6 +63,7 @@ state_choropleth(arr_map,title = " Arrival State average delay in minutes", lege
 ```
 
 We may notice that flights both from and to north eastern parts of the US like New York are most likely to delay. As for the states that flights depart, the middle parts and north eastern parts of the US are more likely to delay. For the states that flights arrive, both the southern part and north eastern part are more likely to delay.
+
 
 ## Exploratory data analysis on flights' delay time:
 
@@ -142,6 +142,7 @@ For the first quarter, airline company 9E(Endeavor Air) seems to perform the bes
 For the second quarter, although airline company AS(Alaska Airline) has lower average delay time than 9E(Endeavor Air) in heat map, 9E(Endeavor Air) seems to have better performance showed by ridge line.  
 For the third quarter, airline company QX(Horizon Air) seems to perform the best with the most of delay time center around -10. This result is aligned with heat map.  
 For the fourth quarter, airline company 9E(Endeavor Air) again seems to perform the best with the distribution tends to normal with mean around -11. Although 9E(Endeavor Air) doesn't have the lowest average delay time in heat map, it distribution showed by ridge line is the best.
+
 
 
 
