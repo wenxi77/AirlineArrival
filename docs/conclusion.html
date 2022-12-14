@@ -23,7 +23,7 @@
 <meta name="author" content="Wenxi Zhang, Ziwei Yang, Siyuan Ding" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -84,9 +84,19 @@
 <li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#delay-or-not"><i class="fa fa-check"></i><b>4.1</b> delay or not</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-time"><i class="fa fa-check"></i><b>4.2</b> Exploratory data analysis on flights’ delay time:</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-reason"><i class="fa fa-check"></i><b>4.3</b> Exploratory data analysis on flights’ delay reason:</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="conclusion.html"><a href="conclusion.html#main-takeaways-of-our-exploration"><i class="fa fa-check"></i><b>6.1</b> Main Takeaways of our Exploration:</a></li>
+<li class="chapter" data-level="6.2" data-path="conclusion.html"><a href="conclusion.html#limitations-and-future-directions"><i class="fa fa-check"></i><b>6.2</b> Limitations and Future Directions:</a></li>
+<li class="chapter" data-level="6.3" data-path="conclusion.html"><a href="conclusion.html#lessons-learned"><i class="fa fa-check"></i><b>6.3</b> Lessons Learned:</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -108,7 +118,23 @@
             <section class="normal" id="section-">
 <div id="conclusion" class="section level1 hasAnchor" number="6">
 <h1><span class="header-section-number">Chapter 6</span> Conclusion<a href="conclusion.html#conclusion" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="main-takeaways-of-our-exploration" class="section level2 hasAnchor" number="6.1">
+<h2><span class="header-section-number">6.1</span> Main Takeaways of our Exploration:<a href="conclusion.html#main-takeaways-of-our-exploration" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Our project is focused on analyzing potential factors, such as time of the flights in quarter of a year, flights’ origins and destinations, flights distance, and airlines, that may cause an airplane to delay. We used non-stop domestic flights and their on-time performances from January 2018 to December 2021 as our data, which is collected by the U.S Department of Transportation (DOT). During our exploration, we mainly worked from three aspects: what factors influence an airplane to delay, what factors are related to different cause of the delay, and what factors may vary the delay time.</p>
+<p>Delay or Not:</p>
+<p>Delay Reason: Our data has five different causes of delay which are recorded by the DOT as carrier, weather, nas, security, and late aircraft delay, and we tried to find the factors that are related to different causes. We drew an alluvial plot from the flight origins to the different causes to the flight destinations and a stacked bar chart between the causes and quarter of a year. From the results, we found the flights departured from California and Florida are delayed mainly because carrier and late aircraft and most NAS delayed airlines have Texas as destination. Also, dueing the fourth quarter, delay caused by carrier is much higher than in other quarters which may because during winter, the low temperature will raise the aircraft damage risk. And during the first quarter, NAS delay time is much longer, which may relate to the heavy traffic volume after holiday. With these results, we find in different state and quarter of the year, the airline will delay for different reasons.</p>
+<p>Delay Time:</p>
+</div>
+<div id="limitations-and-future-directions" class="section level2 hasAnchor" number="6.2">
+<h2><span class="header-section-number">6.2</span> Limitations and Future Directions:<a href="conclusion.html#limitations-and-future-directions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>There are 52 states in our data, but to make plots easier to read, we focused on 3 or 5 states each graph during our analysis. Due to time and space limit, we only worked on the states with higher quantity of delayed flights during our project without looking into other states. If we have more time, we would like to look into more states to verify our findings.</p>
+<p>We wanted to build an interactive plot with</p>
+</div>
+<div id="lessons-learned" class="section level2 hasAnchor" number="6.3">
+<h2><span class="header-section-number">6.3</span> Lessons Learned:<a href="conclusion.html#lessons-learned" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>From this project, we learned and practiced using different graphs for different variables. For example, when we focus on visualizing data on each state of the U.S, we made a spatial plot, when we work to find relationship between categorical variables, we made an alluvial plot, and when we tried to explore between numerical and categorical variables, we made a heatmap.</p>
 
+</div>
 </div>
             </section>
 
