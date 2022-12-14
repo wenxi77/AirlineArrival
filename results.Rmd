@@ -224,7 +224,9 @@ ggplot(df_alluvial_subset, aes(axis1 = ORIGIN_STATE_NM, axis2 = Cause_of_Delay, 
   guides(fill = FALSE)
 ```
 
-From the new alluvial plot, we find most delayed airlines are caused by carrier and late aircraft delay, and Texas has largest quantity of delayed airlines.\\ Checking by origin state, carrier delay and late aircraft delay dominates in flights departured from California and Florida, while the delayed flights departured from Texas has various reasons. Looking into destination states, delayed airlines in these three states all have different causes while carrier delay still dominates in California, late aircraft delay dominates in Florida, and most NAS delay airlines lands in Texas.
+From the new alluvial plot, we find most delayed airlines are caused by carrier and late aircraft delay, and Texas has largest quantity of delayed airlines.  
+
+Checking by origin state, carrier delay and late aircraft delay dominates in flights departured from California and Florida, while the delayed flights departured from Texas has various reasons. Looking into destination states, delayed airlines in these three states all have different causes while carrier delay still dominates in California, late aircraft delay dominates in Florida, and most NAS delay airlines lands in Texas.
 
 **Stacked Bar Plot for Delay Reason and Flight Time in Quarter**
 
@@ -272,4 +274,9 @@ ggplot(df_stacked_bar, aes(fill = fct_relevel(Delay_Reason,order), x = QUARTER, 
   theme(legend.position = "top", legend.text = element_text(size = 7), legend.title = element_blank())
 ```
 
-From the stacked bar plot, we found the delay time caused by security is the shortest and most delays are caused by carrier and late aircraft.\\And in the fourth quarter, carrier causes even longer delay time than other quarters, we think this may because during winter, low temperature will raise the aircraft damage risk and  takes longer time to check and fix, and therefore makes longer delay time.\\And we found in the first quarter, the NAS delay time is much longer, and we think this may because during the first quarter, many people may just return work after Christmas and new year holiday, so there may be heavy traffic volume.\\ We also found in the third quarter, weather causes longer delay time than other quarters, we think this is related to the frequent storm and fog during the third quarter.
+From the stacked bar plot, we found the delay time caused by security is the shortest and most delays are caused by carrier and late aircraft.  
+
+And in the fourth quarter, carrier causes even longer delay time than other quarters, we think this may because during winter, low temperature will raise the aircraft damage risk and  takes longer time to check and fix, and therefore makes longer delay time.  
+And we found in the first quarter, the NAS delay time is much longer, and we think this may because during the first quarter, many people may just return work after Christmas and new year holiday, so there may be heavy traffic volume.  
+
+We also found in the third quarter, weather causes longer delay time than other quarters, we think this is related to the frequent storm and fog during the third quarter.
