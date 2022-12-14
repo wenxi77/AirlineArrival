@@ -1,5 +1,3 @@
-
-
 ```{r}
 df <- read.csv(file='pre-processed data/2018-2021.csv')
 df <- df[-c(1,2)]
