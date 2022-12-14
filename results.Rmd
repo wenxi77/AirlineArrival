@@ -1,5 +1,6 @@
 # Results
 
+
 We want to first have a general idea of what elements would possibly influence the airplane to delay, based on the data we have. The elements we investigate below are different airlines, quarters of a year, and departure/arrival states.
 
 ## delay or not
@@ -173,7 +174,6 @@ We can see that arrival delay is highly correlated with departure delay, which i
 It is also noticeable that wheel time is slightly negatively correlated with arrival delay and distance and air time are nearly uncorrelated with arrival delay time. That suggests that the distance and flight time are not correlated with delay.
 Also, the slight negative correlation between wheel time and arrival delay time suggest the longer the difference of take off and land time, the less the arrival delay time. It usually happens that aircraft arrive early for Long-haul flights, as expected flight time is usually overstated for unexpected circumstances that may delay the flight during the long journey. Thus the general trend is that flight distance and flight time isn't correlated with arrival delay. 
 
-
 ## Exploratory data analysis on flights' delay reason:
 
 This section focuses on the flights' delay reason We want to visualize relationships between the cause of delay and other flights information, like flight origins, destinations and the quarter of the flights.
@@ -273,7 +273,3 @@ ggplot(df_stacked_bar, aes(fill = fct_relevel(Delay_Reason,order), x = QUARTER, 
 ```
 
 From the stacked bar plot, we found the delay time caused by security is the shortest and most delays are caused by carrier and late aircraft.\\And in the fourth quarter, carrier causes even longer delay time than other quarters, we think this may because during winter, low temperature will raise the aircraft damage risk and  takes longer time to check and fix, and therefore makes longer delay time.\\And we found in the first quarter, the NAS delay time is much longer, and we think this may because during the first quarter, many people may just return work after christmas and new year holiday, so there may be heavy traffic volume.\\ We also found in the third quarter, weather causes longer delay time than other quarters, we think this is related to the frequent storm and fog during the third quarter.
-
-
-
-
