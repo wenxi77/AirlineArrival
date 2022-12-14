@@ -9,3 +9,6 @@ missing-value-analysis
 results
 interactive-component
 conclusion
+delay-or-not
+we-may-notice-that-flights-both-from-and-to-north-eastern-parts-of-the-us-like-new-york-are-most-likely-to-delay.-as-for-the-states-that-flights-depart-the-middle-parts-and-north-eastern-parts-of-the-us-are-more-likely-to-delay.-for-the-states-that-flights-arrive-both-the-southern-part-and-north-eastern-part-are-more-likely-to-delay.
+exploratory-data-analysis-on-flights-delay-time

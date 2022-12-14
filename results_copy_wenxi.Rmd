@@ -1,0 +1,66 @@
+# Results
+
+We want to first have a general idea of what elements would possibly influence the airplane to delay, based on the data we have. The elements we investigate below are different airlines, quarters of a year, and departure/arrival states.
+
+## delay or not
+```{r}
+library(dplyr)
+library(grid)
+library(RColorBrewer)
+df <- read.csv(file='pre-processed data/2018-2021.csv')
+df <- df[-c(1,2)]
+
+```
+
+
+
+
+Since we want to investigate the general trend of delay correlated with different time of a year (quarters) and different airlines, here we pick the top 5 airlines that appear most during 2018-2021 in our data set. They are AA (American Airlines), DL (Delta Air Lines), OO (SkyWest Airlines), UA (	United Air Lines), WN (Southwest Airlines). Below the mosaic plot shows the relationship between arrival delay or not, the 5 airlines and quarters.
+
+```{r}
+library(forcats)
+top5 <- df%>%  group_by(OP_UNIQUE_CARRIER)%>% count(sort = TRUE)%>%head(5)%>%select(OP_UNIQUE_CARRIER)
+top5_df <- df %>%transmute(Airlines = OP_UNIQUE_CARRIER, Status = ifelse(df$ARR_DEL15==1,'delay','not delay'), Quarter = QUARTER)%>% filter(Airlines %in% c(top5$OP_UNIQUE_CARRIER))
+
+top5_df$Status <- fct_relevel(top5_df$Status, "not delay")
+vcd::mosaic( Status ~ Airlines + Quarter,top5_df,
+            direction = c("v", "v", "h"), highlighting_fill= RColorBrewer::brewer.pal(8, "Paired"))
+```
+From the plot we may see that for the 5 airlines with most flights in our data set, the third quarter has the highest proportion of delay. Except for Southwest Airlines, the other four airlines show apparent increase in delay in the third quarter. This could be caused by extreme weather like Thunderstorms, which most likely to happen in summer, according to [National Weather Service](https://www.weather.gov/media/grr/brochures/nwsthunderstorms&lightning.pdf).
+
+
+
+
+Next, let's look at how departure states affects departure delay.
+Below the map visualize the average departure delay minutes for every flight departs from some state.
+
+```{r, warning=FALSE}
+library(dplyr)
+library(tidyr)
+library(tibble)
+library(ggplot2)
+library(choroplethr)
+library(choroplethrMaps)
+
+
+dep_delay <- df %>% select(c('ORIGIN_STATE_NM','DEP_DELAY'))%>%transmute(region = tolower(ORIGIN_STATE_NM), value = DEP_DELAY)
+#colnames(dep_delay) <- c('region','value')
+dep_map <- na.omit(dep_delay)%>%group_by(region)%>%summarise(value=mean(value),
+            .groups = 'drop')
+state_choropleth(dep_map,title = " Departure State average delay in minutes", legend='average delay (minutes)')
+
+                  
+```
+
+
+
+Similary, we visualize the average arrival delay minutes for every flight arrive some state.
+```{r,warning=FALSE}
+arr_delay <- df %>% select(c('DEST_STATE_NM','ARR_DELAY'))%>%transmute(region = tolower(DEST_STATE_NM), value = ARR_DELAY)
+arr_map <- na.omit(arr_delay)%>%group_by(region)%>%summarise(value=mean(value),
+            .groups = 'drop')
+state_choropleth(arr_map,title = " Arrival State average delay in minutes", legend='average delay (minutes)')
+```
+
+We may notice that flights both from and to north eastern parts of the US like New York are most likely to delay. As for the states that flights depart, the middle parts and north eastern parts of the US are more likely to delay. For the states that flights arrive, both the southern part and north eastern part are more likely to delay.
+
