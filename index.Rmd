@@ -18,4 +18,4 @@ As a group of intentional students, our team takes the air plane often, and had 
 **Questions we are looking for:**
 
 1. Among all the factors provided by BTS, which of them contributed to the flight delay the most? In other words, find underlying relationships between airline on-time performance and other factors.  
-2. Is flight delay time related in terms of month, quarter, and year?
+2. What insight could we provide travelers in choosing a flight that has lower probability of delay, considering factors like airlines, time of the year, departure/arrival cities or other factors.

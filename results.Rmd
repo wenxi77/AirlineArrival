@@ -3,7 +3,7 @@
 
 We want to first have a general idea of what elements would possibly influence the airplane to delay, based on the data we have. The elements we investigate below are different airlines, quarters of a year, and departure/arrival states.
 
-## delay or not
+## Exploratory data analysis on whether flights delay or not
 ```{r}
 library(dplyr)
 library(grid)
@@ -246,17 +246,6 @@ barorder <- df_stacked_bar %>% filter(Delay_Reason == 'Carrier_Delay_Time') %>% 
 cbPalette <- c("#000000", "#E69F00", "#009E73","#0072B2", "#D55E00")
 
 order <- df_stacked_bar %>% filter(QUARTER == '1') %>% arrange(prop) %>% pull(Delay_Reason)
-
-ggplot(df_stacked_bar, aes(fill = fct_relevel(Delay_Reason,order), x = fct_relevel(QUARTER, barorder), y = prop)) +
-  geom_col(position = "fill", alpha = .75) +
-  scale_fill_manual(values = cbPalette) +
-  xlab('Quarter') + 
-  ggtitle('Delay Time in Percentage by Quarter') +
-  ylab("Delay Time in Percentage") +
-  coord_flip() +
-  guides(fill = guide_legend(reverse = TRUE)) +
-  theme_classic() +
-  theme(legend.position = "top", legend.text = element_text(size = 7), legend.title = element_blank())
 
 ```
 
