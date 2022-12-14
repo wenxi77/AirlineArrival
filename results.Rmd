@@ -35,7 +35,7 @@ From the plot we may see that for the 5 airlines with most flights in our data s
 Next, let's look at how departure states affects departure delay.
 Below the map visualize the average departure delay minutes for every flight departs from some state.
 
-```{r, warning=FALSE}
+```{r, warning=FALSE,fig.width = 10}
 library(dplyr)
 library(tidyr)
 library(tibble)
@@ -45,7 +45,7 @@ library(choroplethrMaps)
 
 
 dep_delay <- df %>% select(c('ORIGIN_STATE_NM','DEP_DELAY'))%>%transmute(region = tolower(ORIGIN_STATE_NM), value = DEP_DELAY)
-#colnames(dep_delay) <- c('region','value')
+
 dep_map <- na.omit(dep_delay)%>%group_by(region)%>%summarise(value=mean(value),
             .groups = 'drop')
 state_choropleth(dep_map,title = " Departure State average delay in minutes", legend='average delay (minutes)')
@@ -55,8 +55,8 @@ state_choropleth(dep_map,title = " Departure State average delay in minutes", le
 
 
 
-Similary, we visualize the average arrival delay minutes for every flight arrive some state.
-```{r,warning=FALSE}
+Similarly, we visualize the average arrival delay minutes for every flight arrive some state.
+```{r,warning=FALSE,fig.width = 10}
 arr_delay <- df %>% select(c('DEST_STATE_NM','ARR_DELAY'))%>%transmute(region = tolower(DEST_STATE_NM), value = ARR_DELAY)
 arr_map <- na.omit(arr_delay)%>%group_by(region)%>%summarise(value=mean(value),
             .groups = 'drop')
