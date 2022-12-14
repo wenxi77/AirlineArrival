@@ -88,9 +88,15 @@
 <ul>
 <li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#delay-or-not"><i class="fa fa-check"></i><b>4.1</b> delay or not</a></li>
 <li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-time"><i class="fa fa-check"></i><b>4.2</b> Exploratory data analysis on flights’ delay time:</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-reason"><i class="fa fa-check"></i><b>4.3</b> Exploratory data analysis on flights’ delay reason:</a></li>
 </ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="conclusion.html"><a href="conclusion.html#main-takeaways-of-our-exploration"><i class="fa fa-check"></i><b>6.1</b> Main Takeaways of our Exploration:</a></li>
+<li class="chapter" data-level="6.2" data-path="conclusion.html"><a href="conclusion.html#limitations-and-future-directions"><i class="fa fa-check"></i><b>6.2</b> Limitations and Future Directions:</a></li>
+<li class="chapter" data-level="6.3" data-path="conclusion.html"><a href="conclusion.html#lessons-learned"><i class="fa fa-check"></i><b>6.3</b> Lessons Learned:</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -157,6 +163,21 @@ from the origin airport), and Taxi out time (difference between Actual Wheels Of
 <p>We can see that arrival delay is highly correlated with departure delay, which is expected as if a flight is delayed for departure, then it is also likely to delay for arrival, given the distance is fixed. It is noticeable that arrival delay is also highly correlated with taxi out time (The time an aircraft takes off - The time an aircraft departed from the gate). This is also reasonable as departure time is indeed the time that the aircraft departed from the gate, thus the longer the taxi out time, the latter the aircraft actually takes off.</p>
 <p>It is also noticeable that wheel time is slightly negatively correlated with arrival delay and distance and air time are nearly uncorrelated with arrival delay time. That suggests that the distance and flight time are not correlated with delay.
 Also, the slight negative correlation between wheel time and arrival delay time suggest the longer the difference of take off and land time, the less the arrival delay time. It usually happens that aircraft arrive early for Long-haul flights, as expected flight time is usually overstated for unexpected circumstances that may delay the flight during the long journey. Thus the general trend is that flight distance and flight time isn’t correlated with arrival delay.</p>
+</div>
+<div id="exploratory-data-analysis-on-flights-delay-reason" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Exploratory data analysis on flights’ delay reason:<a href="results.html#exploratory-data-analysis-on-flights-delay-reason" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This section focuses on the flights’ delay reason We want to visualize relationships between the cause of delay and other flights information, like flight origins, destinations and the quarter of the flights.</p>
+<p><strong>Alluvial Plot for Delay Reason, Origin and Destination</strong></p>
+<p>We first want to know if different delay reason dominates in different origins and destinations, so we drew an alluvial plot between orgin state, delay reason, and destination state to check.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>We found including every state makes the plot too dense to gain any findings, so we tried to find the top three states among the orgins and destinations and replot with only airlines between these states.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>From the new alluvial plot, we find most delayed airlines are caused by carrier and late aircraft delay, and Texas has largest quantity of delayed airlines.\ Checking by origin state, carrier delay and late aircraft delay dominates in flights departured from California and Florida, while the delayed flights departured from Texas has various reasons. Looking into destination states, delayed airlines in these three states all have different causes while carrier delay still dominates in California, late aircraft delay dominates in Florida, and most NAS delay airlines lands in Texas.</p>
+<p><strong>Stacked Bar Plot for Delay Reason and Flight Time in Quarter</strong></p>
+<p>Next, we want to find if the delay reason varies in quarters, and we will make a stacked bar plot to check.</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-17-1.png" width="672" /></p>
+<p>From the stacked bar plot, we found the delay time caused by security is the shortest and most delays are caused by carrier and late aircraft.\And in the fourth quarter, carrier causes even longer delay time than other quarters, we think this may because during winter, low temperature will raise the aircraft damage risk and takes longer time to check and fix, and therefore makes longer delay time.\And we found in the first quarter, the NAS delay time is much longer, and we think this may because during the first quarter, many people may just return work after Christmas and new year holiday, so there may be heavy traffic volume.\ We also found in the third quarter, weather causes longer delay time than other quarters, we think this is related to the frequent storm and fog during the third quarter.</p>
 
 </div>
 </div>

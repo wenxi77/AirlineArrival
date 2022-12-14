@@ -15,3 +15,7 @@ we-may-notice-that-flights-both-from-and-to-north-eastern-parts-of-the-us-like-n
 exploratory-data-analysis-on-flights-delay-time
 =======
 >>>>>>> 1269ef6d0a29ace01c1acf4d3b2066e68643c013
+exploratory-data-analysis-on-flights-delay-reason
+main-takeaways-of-our-exploration
+limitations-and-future-directions
+lessons-learned
