@@ -23,7 +23,7 @@
 <meta name="author" content="Wenxi Zhang, Ziwei Yang, Siyuan Ding" />
 
 
-<meta name="date" content="2022-12-13" />
+<meta name="date" content="2022-12-14" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -148,6 +148,15 @@ We decide to use ridge line to present the distribution of delay time of differe
 For the second quarter, although airline company AS(Alaska Airline) has lower average delay time than 9E(Endeavor Air) in heat map, 9E(Endeavor Air) seems to have better performance showed by ridge line.<br />
 For the third quarter, airline company QX(Horizon Air) seems to perform the best with the most of delay time center around -10. This result is aligned with heat map.<br />
 For the fourth quarter, airline company 9E(Endeavor Air) again seems to perform the best with the distribution tends to normal with mean around -11. Although 9E(Endeavor Air) doesn’t have the lowest average delay time in heat map, it distribution showed by ridge line is the best.</p>
+<p><strong>biplot for correlation of arrival delay time and other continuous variables: </strong></p>
+<p>Next let’s look into the relationship between arrival delay in minutes and flight distances, Air Time, departure delay in minutes, difference between Wheels on time (time that an aircraft crosses a
+certain point (landing or metering fix)) and Wheels off time (time that an aircraft lifts off
+from the origin airport), and Taxi out time (difference between Actual Wheels Off time and Actual Gate Out time, in minutes) and Taxi in Time (difference between Actual Gate In time and Actual Wheels On time, in minutes).</p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-12-1.png" width="672" /></p>
+<p>Here we first select a subset of data containing variables mentioned above and then standardize all subset data so that each column has a mean if 0 and variance of 1. Then we randomly draw fifty rows from the subset to generate the biplot above.</p>
+<p>We can see that arrival delay is highly correlated with departure delay, which is expected as if a flight is delayed for departure, then it is also likely to delay for arrival, given the distance is fixed. It is noticeable that arrival delay is also highly correlated with taxi out time (The time an aircraft takes off - The time an aircraft departed from the gate). This is also reasonable as departure time is indeed the time that the aircraft departed from the gate, thus the longer the taxi out time, the latter the aircraft actually takes off.</p>
+<p>It is also noticeable that wheel time is slightly negatively correlated with arrival delay and distance and air time are nearly uncorrelated with arrival delay time. That suggests that the distance and flight time are not correlated with delay.
+Also, the slight negative correlation between wheel time and arrival delay time suggest the longer the difference of take off and land time, the less the arrival delay time. It usually happens that aircraft arrive early for Long-haul flights, as expected flight time is usually overstated for unexpected circumstances that may delay the flight during the long journey. Thus the general trend is that flight distance and flight time isn’t correlated with arrival delay.</p>
 
 </div>
 </div>
