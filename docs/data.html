@@ -140,7 +140,7 @@ We have one step for data cleaning and two steps for data transformation:<br />
 <p>There are two patterns appeared are all four plots:<br />
 The first pattern is that most data has missing values on features carrier, weather, nas dela, security, and late air. These five features are actually the five possible reasons why a flight was delayed, and clearly if one reason is missing, all other reasons are missing as well. This is probably because the reason for a flight’s delay is either reported or not.<br />
 The second pattern is related to columns about a flight’s departure and arrival performance. If one column about flight’s departure and arrival performance, then all other columns about that are also missing. That is probably because those flights’ performance were not reported at all.</p>
-<p><img src="finalproj_files/figure-html/unnamed-chunk-9-2.png" width="672" /></p>
+<p><img src="finalproj_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>Since the data set has 48 variables, which will cause column names to overlapping, we assigned alphabetic letters as abbreviations to each column. Then we referred back to the assignment when analyzing the missing value patterns.</p>
 <p>There are nine patterns displayed by plot_missing functions. However according to number of rows each pattern has, only top three patterns are worth to analyze.<br />
 The first pattern is that there are five columns tend to miss at the same time, and these five columns are actually the five possible reasons for a flight’s delay. There are more than 75% data/rows have this pattern.<br />
