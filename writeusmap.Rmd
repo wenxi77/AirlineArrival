@@ -1,0 +1,16 @@
+```{r}
+library(dplyr)
+library(tidyverse)
+library(tidygeocoder)
+df <- read.csv(file='pre-processed data/2018-2021.csv')
+df <- df[-c(1,2)]
+dep_delay <- df %>% select(c('ORIGIN_STATE_NM','DEP_DELAY'))%>%transmute(region = tolower(ORIGIN_STATE_NM), value = DEP_DELAY)
+#colnames(dep_delay) <- c('region','value')
+dep_map <- na.omit(dep_delay)%>%group_by(region)%>%summarise(value=mean(value),
+            .groups = 'drop')
+lat_longs <- dep_map %>% geocode(region, method = 'osm', lat = latitude , long = longitude)
+```
+
+```{r}
+write.csv(lat_longs, "usmap.csv",row.names=FALSE)
+```
