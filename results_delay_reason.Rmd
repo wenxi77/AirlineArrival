@@ -1,0 +1,96 @@
+
+
+```{r}
+df <- read.csv(file='pre-processed data/2018-2021.csv')
+df <- df[-c(1,2)]
+```
+
+We first want to know if different delay reason dominates in different origins and destinations, so we drew an alluvial plot between orgin state, delay reason, and destination state to check.
+
+```{r, warning=FALSE}
+library(ggalluvial)  
+library(dplyr)
+library(tidyverse)
+
+df1 = df %>% pivot_longer(cols = c(CARRIER_DELAY, WEATHER_DELAY, NAS_DELAY, SECURITY_DELAY, LATE_AIRCRAFT_DELAY), names_to = 'Cause_of_Delay', values_to = 'Delay_Time_In_Minutes')
+df_alluvial = df1 %>% na.omit(ORIGIN_STATE_NM, Cause_of_Delay, DEST_STATE_NM, Delay_Time_In_Minutes)
+ggplot(df_alluvial, aes(axis1 = ORIGIN_STATE_NM, axis2 = Cause_of_Delay, axis3 = DEST_STATE_NM, y = Delay_Time_In_Minutes)) +  
+  geom_alluvium(aes(fill = Cause_of_Delay), width = 1/12) +  
+  geom_stratum() +  
+  geom_text(stat = "stratum", aes(label = paste(after_stat(stratum), "\n", after_stat(count))), size = 1) +  
+  scale_x_discrete(limits = c("Origin State", "Delay Reason", "Destination State"))
+```
+
+We found including every state makes the plot too dense to gain any findings, so we tried to find the top three states among the orgins and destinations and replot with only airlines between these states.
+
+```{r, warning=FALSE}
+library(ggalluvial)  
+library(dplyr)
+library(tidyverse)
+
+df1 <- df %>% pivot_longer(cols = c(CARRIER_DELAY, WEATHER_DELAY, NAS_DELAY, SECURITY_DELAY, LATE_AIRCRAFT_DELAY), names_to = 'Cause_of_Delay', values_to = 'Delay_Time_In_Minutes')
+df_alluvial <- df1 %>% na.omit(ORIGIN_STATE_NM, Cause_of_Delay, DEST_STATE_NM, Delay_Time_In_Minutes) %>% select(c(ORIGIN_STATE_NM, Cause_of_Delay, DEST_STATE_NM, Delay_Time_In_Minutes))
+state_ori <- df_alluvial$ORIGIN_STATE_NM
+state_dest <- df_alluvial$DEST_STATE_NM
+state_all <- c(state_ori, state_dest)
+state = names(sort(table(state_all), decreasing = TRUE)[1:3])
+df_alluvial_subset <- df_alluvial %>% subset(ORIGIN_STATE_NM %in% state) %>% subset(DEST_STATE_NM %in% state)
+ggplot(df_alluvial_subset, aes(axis1 = ORIGIN_STATE_NM, axis2 = Cause_of_Delay, axis3 = DEST_STATE_NM, y = Delay_Time_In_Minutes)) +  
+  geom_alluvium(aes(fill = ORIGIN_STATE_NM), width = 1/12) +  
+  geom_stratum(width = 1/2) +  
+  geom_text(stat = "stratum", aes(label = paste(after_stat(stratum), "\n", after_stat(count))), size = 1.5) +  
+  scale_x_discrete(limits = c("Origin State", "Delay Reason", "Destination State")) +
+  ylab('Delay in Minutes') +
+  guides(fill = FALSE)
+```
+
+From the new alluvial plot, we find most delayed airlines are caused by carrier and late aircraft delay, and Texas has largest quantity of delayed airlines.\\ Checking by origin state, carrier delay and late aircraft delay dominates in flights departured from California and Florida, while the delayed flights departured from Texas has various reasons. Looking into destination states, delayed airlines in these three states all have different causes while carrier delay still dominates in California, late aircraft delay dominates in Florida, and most NAS delay airlines lands in Texas.
+
+
+Next, we want to find if the delay reason varies in quarters, and we will make a stacked bar plot to check.
+
+```{r}
+df_stacked_bar <- df %>% group_by(QUARTER) %>% summarise(Carrier_Delay_Time = sum(CARRIER_DELAY, na.rm = TRUE),
+                                       Weather_Delay_Time = sum(WEATHER_DELAY, na.rm = TRUE),
+                                       NAS_Delay_Time = sum(NAS_DELAY, na.rm = TRUE),
+                                       Security_Delay_Time = sum(SECURITY_DELAY, na.rm = TRUE),
+                                       Late_Aircraft_Delay_Time = sum(LATE_AIRCRAFT_DELAY, na.rm = TRUE))%>%
+  pivot_longer(c(Carrier_Delay_Time, Weather_Delay_Time, NAS_Delay_Time, Security_Delay_Time, Late_Aircraft_Delay_Time), names_to = 'Delay_Reason', values_to = 'Delay_Time')
+df_stacked_bar <- df_stacked_bar %>% group_by(QUARTER) %>% mutate(prop = Delay_Time/sum(Delay_Time, na.rm = TRUE)) %>% ungroup()
+df_stacked_bar$QUARTER <- as.character(df_stacked_bar$QUARTER)
+
+barorder <- df_stacked_bar %>% filter(Delay_Reason == 'Carrier_Delay_Time') %>% arrange(prop) %>% pull(QUARTER)
+cbPalette <- c("#000000", "#E69F00", "#009E73","#0072B2", "#D55E00")
+
+order <- df_stacked_bar %>% filter(QUARTER == '1') %>% arrange(prop) %>% pull(Delay_Reason)
+
+ggplot(df_stacked_bar, aes(fill = fct_relevel(Delay_Reason,order), x = fct_relevel(QUARTER, barorder), y = prop)) +
+  geom_col(position = "fill", alpha = .75) +
+  scale_fill_manual(values = cbPalette) +
+  xlab('Quarter') + 
+  ggtitle('Delay Time in Percentage by Quarter') +
+  ylab("Delay Time in Percentage") +
+  coord_flip() +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme_classic() +
+  theme(legend.position = "top", legend.text = element_text(size = 7), legend.title = element_blank())
+
+```
+
+
+```{r}
+ggplot(df_stacked_bar, aes(fill = fct_relevel(Delay_Reason,order), x = QUARTER, y = prop)) +
+  geom_col(position = "fill", alpha = .75) +
+  scale_fill_manual(values = cbPalette) +
+  xlab('Quarter') + 
+  ggtitle('Delay Time in Percentage by Quarter') +
+  ylab("Delay Time in Percentage") +
+  coord_flip() +
+  guides(fill = guide_legend(reverse = TRUE)) +
+  theme_classic() +
+  theme(legend.position = "top", legend.text = element_text(size = 7), legend.title = element_blank())
+```
+
+From the stacked bar plot, we found the delay time caused by security is the shortest and most delays are caused by carrier and late aircraft.\\And in the fourth quarter, carrier causes even longer delay time than other quarters, we think this may because during winter, low temperature will raise the aircraft damage risk and  takes longer time to check and fix, and therefore makes longer delay time.\\And we found in the first quarter, the NAS delay time is much longer, and we think this may because during the first quarter, many people may just return work after christmas and new year holiday, so there may be heavy traffic volume.\\ We also found in the third quarter, weather causes longer delay time than other quarters, we think this is related to the frequent storm and fog during the third quarter.
+
+
