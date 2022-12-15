@@ -1,48 +1,32 @@
-
 # Interactive component
-Link to D3: https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a
-
-We created an interactive plot showing the quantity of delayed airlines with small circles and the more delayed airlines in this state, the more circles shown on the plot; and when the mouse put on a state, its color will change to green. When building this plot, we learned from this graph on vizhub: https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files
-
-
 ```{r,include=FALSE, eval=FALSE}
 library(dplyr)
 library(tidyr)
-df <- read.csv(file='pre-processed data/2018-2021.csv')
+df <- read.csv(file='2018-2021.csv')
 df <- df[-c(1,2)]
-df <- df %>%transmute(Airlines = OP_UNIQUE_CARRIER, month = MONTH, delay=ARR_DELAY)
-newdf <- na.omit(df) %>% group_by(Airlines,month) %>% summarise(delay=mean(delay))
-rank_df <-newdf %>% group_by(Airlines) %>% summarise(delay=mean(delay)) %>% mutate(rank=row_number(delay))
+df %>% select(c('ORIGIN_STATE_NM','DEP_DELAY'))%>%transmute(region = tolower(ORIGIN_STATE_NM), value = DEP_DELAY)
+top5 <- df%>%  group_by(OP_UNIQUE_CARRIER)%>% count(sort = TRUE)%>%head(5)%>%select(OP_UNIQUE_CARRIER)
+top5_df <- df %>%transmute(Airlines = OP_UNIQUE_CARRIER, Status = ARR_DEL15, month = MONTH, delay=ARR_DELAY)%>% filter(Airlines %in% c(top5$OP_UNIQUE_CARRIER))
+newdf <- na.omit(top5_df) %>% group_by(Airlines,month) %>% summarise(delay=mean(delay))
 wide_df <- newdf %>% pivot_wider(names_from = Airlines, values_from = delay)
-colnames(wide_df) <- c("month", "Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines")
+colnames(wide_df) <- c("month","American Airlines", "Delta Airlines", "SkyWest Airlines","United Airlines", "Southwest Airlines")
 wide_df$month <- month.abb[wide_df$month]
-for (i in 1:19) {
-  rank <- rep(rank_df$rank[i], 12)
-  delay <- rep(round(rank_df$delay[i],2), 12)
-  wide_df <- cbind(wide_df, rank)
-  wide_df <- cbind(wide_df, delay)
-  colnames(wide_df)[which(names(wide_df) == 'rank')] <- paste(colnames(wide_df)[i+1], "Rank", sep = " ")
-  colnames(wide_df)[which(names(wide_df) == 'delay')] <- paste(colnames(wide_df)[i+1], "Delay", sep = " ")
-}
+rank <- c(1,1,1,1,1,1,1,1,1,1,1,1)
+wide_df <- cbind(wide_df, rank)
+colnames(wide_df)[which(names(wide_df) == 'rank')] <- "Delta Airlines Rank"
 write.table(wide_df , file = "wide.csv", sep=",", row.names=FALSE)
-read.csv("pre-processed data/wide.csv")
+read.csv("wide.csv")
 ```
 
-Below we show the line chart of each airline's monthly average arrival delay time in minutes. 
-There are two interactive parts that user could play around with:
-
-1. Users can specify the airline through select 
-
-
-
-
 <script src="https://d3js.org/d3.v7.js"></script>
-
+<script src="https://d3js.org/topojson.v2.min.js"></script>
 <select id="selectButton"></select>
 
-
+<!-- Create a div where the graph will take place -->
 <div id="my_dataviz"></div>
 
+<!-- Color Scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 
 <script>
 // set the dimensions and margins of the graph
@@ -53,15 +37,15 @@ const margin = {top: 10, right: 100, bottom: 30, left: 30},
 // append the svg object to the body of the page
 const svg = d3.select("#my_dataviz")
   .append("svg")
-    .attr("width", 900)
-    .attr("height", 600)
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
   .append("g")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 //Read the data
-d3.csv("pre-processed data/wide.csv").then( function(data) {
+d3.csv("wide.csv").then( function(data) {
     // List of groups 
-    const allGroup = ["Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines"]
+    const allGroup = ["American Airlines", "Delta Airlines", "SkyWest Airlines","United Airlines", "Southwest Airlines"]
     // add the options to the button
     d3.select("#selectButton")
       .selectAll('myOptions')
@@ -77,6 +61,7 @@ d3.csv("pre-processed data/wide.csv").then( function(data) {
     // Add X axis --> it is a date format
     const month = [{month: "Jan"}, {month: "Feb"}, {month: "Mar"}, {month: "Apr"}, {month: "May"}, {month: "Jun"},
                  {month: "Jul"}, {month: "Aug"}, {month: "Sep"}, {month: "Oct"}, {month: "Nov"}, {month: "Dec"}]
+    const ranks = [{'Delta Airlines Rank': "1"}]
     const x = d3.scaleBand()
       .domain(month.map(d => d.month))
       .range([0, width])
@@ -85,7 +70,7 @@ d3.csv("pre-processed data/wide.csv").then( function(data) {
       .call(d3.axisBottom(x));
     // Add Y axis
     const y = d3.scaleLinear()
-      .domain( [-15,30])
+      .domain( [-15,15])
       .range([ height, 0 ]);
     svg.append("g")
       .call(d3.axisLeft(y));
@@ -126,7 +111,7 @@ d3.csv("pre-processed data/wide.csv").then( function(data) {
          .attr("id", "info")
          .attr("x", 400)
          .attr("y", 100)
-         .text('rank: '+d3.min(data.map(function(d){return d[d3.select("#selectButton").node().value.toString()+' Rank']} )).toString()+' average delay time (minutes): ' + d3.min(data.map(function(d){return d[d3.select("#selectButton").node().value.toString()+' Delay']} )).toString());
+         .text(function () { return ranks.map('Delta Airlines Rank'); });
          })
          .on("mouseout", function() {
          svg.select("#info").remove();
@@ -158,4 +143,3 @@ d3.csv("pre-processed data/wide.csv").then( function(data) {
 
     
 </script>
-
