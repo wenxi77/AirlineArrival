@@ -1,9 +1,5 @@
 
 # Interactive component
-Link to D3: https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a
-
-We created an interactive plot showing the quantity of delayed airlines with small circles and the more delayed airlines in this state, the more circles shown on the plot; and when the mouse put on a state, its color will change to green. When building this plot, we learned from this graph on vizhub: https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files
-
 
 ```{r,include=FALSE, eval=FALSE}
 library(dplyr)
@@ -27,6 +23,9 @@ for (i in 1:19) {
 write.table(wide_df , file = "wide.csv", sep=",", row.names=FALSE)
 read.csv("pre-processed data/wide.csv")
 ```
+
+
+## interactive line chart
 
 Below we show the line chart of each airline's monthly average arrival delay time in minutes. 
 There are two interactive parts that user could play around with:
@@ -160,4 +159,12 @@ d3.csv("https://raw.githubusercontent.com/wenxi77/AirlineArrival/main/pre-proces
 
     
 </script>
+
+
+## Delayed Airlines map plot
+
+Link to D3: https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a
+
+We created an interactive plot showing the quantity of delayed airlines with small circles and the more delayed airlines in this state, the more circles shown on the plot; and when the mouse put on a state, its color will change to green. When building this plot, we learned from this graph on vizhub: https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files
+
 

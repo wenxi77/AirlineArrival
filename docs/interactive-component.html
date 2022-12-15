@@ -90,7 +90,11 @@
 <li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-time"><i class="fa fa-check"></i><b>4.2</b> Exploratory data analysis on flights’ delay time:</a></li>
 <li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-reason"><i class="fa fa-check"></i><b>4.3</b> Exploratory data analysis on flights’ delay reason:</a></li>
 </ul></li>
-<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
+<li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="interactive-component.html"><a href="interactive-component.html#interactive-line-chart"><i class="fa fa-check"></i><b>5.1</b> interactive line chart</a></li>
+<li class="chapter" data-level="5.2" data-path="interactive-component.html"><a href="interactive-component.html#delayed-airlines-map-plot"><i class="fa fa-check"></i><b>5.2</b> Delayed Airlines map plot</a></li>
+</ul></li>
 <li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a>
 <ul>
 <li class="chapter" data-level="6.1" data-path="conclusion.html"><a href="conclusion.html#main-takeaways-of-our-exploration"><i class="fa fa-check"></i><b>6.1</b> Main Takeaways of our Exploration:</a></li>
@@ -118,8 +122,8 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Interactive component<a href="interactive-component.html#interactive-component" class="anchor-section" aria-label="Anchor link to header"></a></h1>
-<p>Link to D3: <a href="https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a" class="uri">https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a</a></p>
-<p>We created an interactive plot showing the quantity of delayed airlines with small circles and the more delayed airlines in this state, the more circles shown on the plot; and when the mouse put on a state, its color will change to green. When building this plot, we learned from this graph on vizhub: <a href="https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files" class="uri">https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files</a></p>
+<div id="interactive-line-chart" class="section level2 hasAnchor" number="5.1">
+<h2><span class="header-section-number">5.1</span> interactive line chart<a href="interactive-component.html#interactive-line-chart" class="anchor-section" aria-label="Anchor link to header"></a></h2>
 <p>Below we show the line chart of each airline’s monthly average arrival delay time in minutes.
 There are two interactive parts that user could play around with:</p>
 <ol style="list-style-type: decimal">
@@ -246,7 +250,13 @@ d3.csv("https://raw.githubusercontent.com/wenxi77/AirlineArrival/main/pre-proces
 
     
 </script>
+</div>
+<div id="delayed-airlines-map-plot" class="section level2 hasAnchor" number="5.2">
+<h2><span class="header-section-number">5.2</span> Delayed Airlines map plot<a href="interactive-component.html#delayed-airlines-map-plot" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Link to D3: <a href="https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a" class="uri">https://vizhub.com/SelenaDing0312/be2c483b4e394bac8ce133d20e90114a</a></p>
+<p>We created an interactive plot showing the quantity of delayed airlines with small circles and the more delayed airlines in this state, the more circles shown on the plot; and when the mouse put on a state, its color will change to green. When building this plot, we learned from this graph on vizhub: <a href="https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files" class="uri">https://vizhub.com/itsyaboichase/3c2f7cc15fc242e4a3fb6f3dee195141?edit=files</a></p>
 
+</div>
 </div>
             </section>
 
