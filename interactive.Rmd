@@ -31,8 +31,10 @@ read.csv("pre-processed data/wide.csv")
 Below we show the line chart of each airline's monthly average arrival delay time in minutes. 
 There are two interactive parts that user could play around with:
 
-1. Users can specify the airline through select 
+1. Users can specify the airline through selection botton.
+2. Users can see the rank of delay time in increasing order and average delay time of the airline by hover the mouse over the line in plot.
 
+Reference: https://d3-graph-gallery.com/graph/line_select.html
 
 
 
@@ -59,7 +61,7 @@ const svg = d3.select("#my_dataviz")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 //Read the data
-d3.csv("pre-processed data/wide.csv").then( function(data) {
+d3.csv("https://raw.githubusercontent.com/wenxi77/AirlineArrival/main/pre-processed%20data/wide.csv").then( function(data) {
     // List of groups 
     const allGroup = ["Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines"]
     // add the options to the button

@@ -123,8 +123,10 @@
 <p>Below we show the line chart of each airline’s monthly average arrival delay time in minutes.
 There are two interactive parts that user could play around with:</p>
 <ol style="list-style-type: decimal">
-<li>Users can specify the airline through select</li>
+<li>Users can specify the airline through selection botton.</li>
+<li>Users can see the rank of delay time in increasing order and average delay time of the airline by hover the mouse over the line in plot.</li>
 </ol>
+<p>Reference: <a href="https://d3-graph-gallery.com/graph/line_select.html" class="uri">https://d3-graph-gallery.com/graph/line_select.html</a></p>
 <script src="https://d3js.org/d3.v7.js"></script>
 <p><select id="selectButton"></select></p>
 <div id="my_dataviz">
@@ -145,7 +147,7 @@ const svg = d3.select("#my_dataviz")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 //Read the data
-d3.csv("pre-processed data/wide.csv").then( function(data) {
+d3.csv("https://raw.githubusercontent.com/wenxi77/AirlineArrival/main/pre-processed%20data/wide.csv").then( function(data) {
     // List of groups 
     const allGroup = ["Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines"]
     // add the options to the button
