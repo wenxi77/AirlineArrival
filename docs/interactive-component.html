@@ -23,7 +23,7 @@
 <meta name="author" content="Wenxi Zhang, Ziwei Yang, Siyuan Ding" />
 
 
-<meta name="date" content="2022-11-01" />
+<meta name="date" content="2022-12-15" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -84,9 +84,19 @@
 <li class="chapter" data-level="3.2" data-path="data.html"><a href="data.html#cleaning-transformation"><i class="fa fa-check"></i><b>3.2</b> Cleaning / transformation</a></li>
 <li class="chapter" data-level="3.3" data-path="data.html"><a href="data.html#missing-value-analysis"><i class="fa fa-check"></i><b>3.3</b> Missing value analysis</a></li>
 </ul></li>
-<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a></li>
+<li class="chapter" data-level="4" data-path="results.html"><a href="results.html"><i class="fa fa-check"></i><b>4</b> Results</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-whether-flights-delay-or-not"><i class="fa fa-check"></i><b>4.1</b> Exploratory data analysis on whether flights delay or not</a></li>
+<li class="chapter" data-level="4.2" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-time"><i class="fa fa-check"></i><b>4.2</b> Exploratory data analysis on flights’ delay time:</a></li>
+<li class="chapter" data-level="4.3" data-path="results.html"><a href="results.html#exploratory-data-analysis-on-flights-delay-reason"><i class="fa fa-check"></i><b>4.3</b> Exploratory data analysis on flights’ delay reason:</a></li>
+</ul></li>
 <li class="chapter" data-level="5" data-path="interactive-component.html"><a href="interactive-component.html"><i class="fa fa-check"></i><b>5</b> Interactive component</a></li>
-<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a></li>
+<li class="chapter" data-level="6" data-path="conclusion.html"><a href="conclusion.html"><i class="fa fa-check"></i><b>6</b> Conclusion</a>
+<ul>
+<li class="chapter" data-level="6.1" data-path="conclusion.html"><a href="conclusion.html#main-takeaways-of-our-exploration"><i class="fa fa-check"></i><b>6.1</b> Main Takeaways of our Exploration:</a></li>
+<li class="chapter" data-level="6.2" data-path="conclusion.html"><a href="conclusion.html#limitations-and-future-directions"><i class="fa fa-check"></i><b>6.2</b> Limitations and Future Directions:</a></li>
+<li class="chapter" data-level="6.3" data-path="conclusion.html"><a href="conclusion.html#lessons-learned"><i class="fa fa-check"></i><b>6.3</b> Lessons Learned:</a></li>
+</ul></li>
 <li class="divider"></li>
 <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
 </ul>
@@ -108,6 +118,130 @@
             <section class="normal" id="section-">
 <div id="interactive-component" class="section level1 hasAnchor" number="5">
 <h1><span class="header-section-number">Chapter 5</span> Interactive component<a href="interactive-component.html#interactive-component" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Below we show the line chart of each airline’s monthly average arrival delay time in minutes.
+There are two interactive parts that user could play around with:</p>
+<ol style="list-style-type: decimal">
+<li>Users can specify the airline through select</li>
+</ol>
+<script src="https://d3js.org/d3.v7.js"></script>
+<p><select id="selectButton"></select></p>
+<div id="my_dataviz">
+
+</div>
+<script>
+// set the dimensions and margins of the graph
+const margin = {top: 10, right: 100, bottom: 30, left: 30},
+    width = 900 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+const svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", 900)
+    .attr("height", 600)
+  .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+//Read the data
+d3.csv("pre-processed data/wide.csv").then( function(data) {
+    // List of groups 
+    const allGroup = ["Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines"]
+    // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+        .data(allGroup)
+      .enter()
+        .append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; })
+    // A color scale: one color for each group
+    const myColor = d3.scaleOrdinal()
+      .domain(allGroup)
+      .range(d3.schemeSet2);
+    // Add X axis --> it is a date format
+    const month = [{month: "Jan"}, {month: "Feb"}, {month: "Mar"}, {month: "Apr"}, {month: "May"}, {month: "Jun"},
+                 {month: "Jul"}, {month: "Aug"}, {month: "Sep"}, {month: "Oct"}, {month: "Nov"}, {month: "Dec"}]
+    const x = d3.scaleBand()
+      .domain(month.map(d => d.month))
+      .range([0, width])
+    svg.append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(x));
+    // Add Y axis
+    const y = d3.scaleLinear()
+      .domain( [-15,30])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+    svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 6)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Average Delay Time");
+    svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height - 6)
+    .text("Month");
+    svg.append("text")
+    .attr("class", "title")
+    .attr("text-anchor", "end")
+    .style("font", "24px times")
+    .attr("x", 680)
+    .attr("y", 12)
+    .text("Monthly Change of Delay Time for Different Airlines");
+    // Initialize line with group a
+    const line = svg
+      .append('g')
+      .append("path")
+        .datum(data)
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.month) + 30 })
+          .y(function(d) { return y(+d['American Airlines']) })
+        )
+        .attr("stroke", function(d){ return myColor("American Airlines") })
+        .style("stroke-width", 10)
+        .style("fill", "none")
+        .on("mouseover", function() {
+         svg.append("text")
+         .attr("id", "info")
+         .attr("x", 400)
+         .attr("y", 100)
+         .text('rank: '+d3.min(data.map(function(d){return d[d3.select("#selectButton").node().value.toString()+' Rank']} )).toString()+' average delay time (minutes): ' + d3.min(data.map(function(d){return d[d3.select("#selectButton").node().value.toString()+' Delay']} )).toString());
+         })
+         .on("mouseout", function() {
+         svg.select("#info").remove();
+         });
+    // A function that update the chart
+    function update(selectedGroup) {
+      // Create new data with the selection?
+      const dataFilter = data.map(function(d){return {month:d.month, value:d[selectedGroup], rank:d[selectedGroup+' Rank']} })
+      // Give these new data to update line
+      line
+          .datum(dataFilter)
+          .transition()
+          .duration(1000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.month) + 30 })
+            .y(function(d) { return y(+d.value) })
+          )
+          .attr("stroke", function(d){ return myColor(selectedGroup) })
+    }
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(event,d) {
+        // recover the option that has been chosen
+        const selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
+    })
+
+})
+
+    
+</script>
 
 </div>
             </section>
