@@ -1,6 +1,6 @@
 # Conclusion
 
-## Main Takeaways of our Exploration:
+## Main Takeaways of our Exploration
 
 Our project is focused on analyzing potential factors, such as time of the flights in quarter of a year, flights' origins and destinations, flights distance, and airlines, that may cause an airplane to delay. We used non-stop domestic flights and their on-time performances from January 2018 to December 2021 as our data, which is collected by the U.S Department of Transportation (DOT). During our exploration, we mainly worked from three aspects: what factors influence an airplane to delay, what factors are related to different cause of the delay, and what factors may vary the delay time.
 
@@ -10,14 +10,13 @@ Delay Reason: Our data has five different causes of delay which are recorded by 
 
 Delay Time: The heat map on average delay time of different airline shows that the third and the fourth quarter tend to have delays comparing with other time of the year. Then we draw ridgeline plot based on top 5 on time airlines, visualizing distribution of each airline's average delay time for each quarter. Finally, we use biplot finding correlation of arrival delay time and other continuous variables like flight distances, Air Time, departure delay and other factors. We discover that arrival delay is highly correlated with departure delay and taxi out time (the time difference between an aircraft takes off and an aircraft departed from the gate)
 
-## Limitations and Future Directions:
+## Limitations and Future Directions
 
 There are 52 states in our data, but to make plots easier to read, we focused on 3 or 5 states each graph during our analysis. Due to time and space limit, we only worked on the states with higher quantity of delayed flights during our project without looking into other states. If we have more time, we would like to look into more states to verify our findings.
 
-We wanted to build an interactive plot with
+For D3 part, we wanted to build an interactive plot of a United States map and when clicking on two states, there will be an 'airplane' label fly from the first state to the second state and showing the delay possibility and time for this airline, but we are not skilled enough to finish it now, so in the future, we would like to learn more about d3 and try to make this plot out.
 
-
-## Lessons Learned:
+## Lessons Learned
 
 From this project, we learned and practiced using different graphs for different variables. For example, when we focus on visualizing data on each state of the U.S, we made a spatial plot, when we work to find relationship between categorical variables, we made an alluvial plot, and when we tried to explore between numerical and categorical variables, we made a heatmap.
 
