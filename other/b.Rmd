@@ -1,0 +1,145 @@
+# Interactive component
+```{r,include=FALSE, eval=FALSE}
+library(dplyr)
+library(tidyr)
+df <- read.csv(file='2018-2021.csv')
+df <- df[-c(1,2)]
+df %>% select(c('ORIGIN_STATE_NM','DEP_DELAY'))%>%transmute(region = tolower(ORIGIN_STATE_NM), value = DEP_DELAY)
+top5 <- df%>%  group_by(OP_UNIQUE_CARRIER)%>% count(sort = TRUE)%>%head(5)%>%select(OP_UNIQUE_CARRIER)
+top5_df <- df %>%transmute(Airlines = OP_UNIQUE_CARRIER, Status = ARR_DEL15, month = MONTH, delay=ARR_DELAY)%>% filter(Airlines %in% c(top5$OP_UNIQUE_CARRIER))
+newdf <- na.omit(top5_df) %>% group_by(Airlines,month) %>% summarise(delay=mean(delay))
+wide_df <- newdf %>% pivot_wider(names_from = Airlines, values_from = delay)
+colnames(wide_df) <- c("month","American Airlines", "Delta Airlines", "SkyWest Airlines","United Airlines", "Southwest Airlines")
+wide_df$month <- month.abb[wide_df$month]
+rank <- c(1,1,1,1,1,1,1,1,1,1,1,1)
+wide_df <- cbind(wide_df, rank)
+colnames(wide_df)[which(names(wide_df) == 'rank')] <- "Delta Airlines Rank"
+write.table(wide_df , file = "wide.csv", sep=",", row.names=FALSE)
+read.csv("wide.csv")
+```
+
+<script src="https://d3js.org/d3.v7.js"></script>
+<script src="https://d3js.org/topojson.v2.min.js"></script>
+<select id="selectButton"></select>
+
+<!-- Create a div where the graph will take place -->
+<div id="my_dataviz"></div>
+
+<!-- Color Scale -->
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+
+<script>
+// set the dimensions and margins of the graph
+const margin = {top: 10, right: 100, bottom: 30, left: 30},
+    width = 900 - margin.left - margin.right,
+    height = 600 - margin.top - margin.bottom;
+
+// append the svg object to the body of the page
+const svg = d3.select("#my_dataviz")
+  .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+  .append("g")
+    .attr("transform", `translate(${margin.left},${margin.top})`);
+
+//Read the data
+d3.csv("wide.csv").then( function(data) {
+    // List of groups 
+    const allGroup = ["American Airlines", "Delta Airlines", "SkyWest Airlines","United Airlines", "Southwest Airlines"]
+    // add the options to the button
+    d3.select("#selectButton")
+      .selectAll('myOptions')
+     	.data(allGroup)
+      .enter()
+    	.append('option')
+      .text(function (d) { return d; }) // text showed in the menu
+      .attr("value", function (d) { return d; })
+    // A color scale: one color for each group
+    const myColor = d3.scaleOrdinal()
+      .domain(allGroup)
+      .range(d3.schemeSet2);
+    // Add X axis --> it is a date format
+    const month = [{month: "Jan"}, {month: "Feb"}, {month: "Mar"}, {month: "Apr"}, {month: "May"}, {month: "Jun"},
+                 {month: "Jul"}, {month: "Aug"}, {month: "Sep"}, {month: "Oct"}, {month: "Nov"}, {month: "Dec"}]
+    const ranks = [{'Delta Airlines Rank': "1"}]
+    const x = d3.scaleBand()
+      .domain(month.map(d => d.month))
+      .range([0, width])
+    svg.append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(x));
+    // Add Y axis
+    const y = d3.scaleLinear()
+      .domain( [-15,15])
+      .range([ height, 0 ]);
+    svg.append("g")
+      .call(d3.axisLeft(y));
+    svg.append("text")
+    .attr("class", "y label")
+    .attr("text-anchor", "end")
+    .attr("y", 6)
+    .attr("dy", ".75em")
+    .attr("transform", "rotate(-90)")
+    .text("Average Delay Time");
+    svg.append("text")
+    .attr("class", "x label")
+    .attr("text-anchor", "end")
+    .attr("x", width)
+    .attr("y", height - 6)
+    .text("Month");
+    svg.append("text")
+    .attr("class", "title")
+    .attr("text-anchor", "end")
+    .style("font", "24px times")
+    .attr("x", 680)
+    .attr("y", 12)
+    .text("Monthly Change of Delay Time for Different Airlines");
+    // Initialize line with group a
+    const line = svg
+      .append('g')
+      .append("path")
+        .datum(data)
+        .attr("d", d3.line()
+          .x(function(d) { return x(d.month) + 30 })
+          .y(function(d) { return y(+d['American Airlines']) })
+        )
+        .attr("stroke", function(d){ return myColor("American Airlines") })
+        .style("stroke-width", 10)
+        .style("fill", "none")
+        .on("mouseover", function() {
+         svg.append("text")
+         .attr("id", "info")
+         .attr("x", 400)
+         .attr("y", 100)
+         .text(function () { return ranks.map('Delta Airlines Rank'); });
+         })
+         .on("mouseout", function() {
+         svg.select("#info").remove();
+         });
+    // A function that update the chart
+    function update(selectedGroup) {
+      // Create new data with the selection?
+      const dataFilter = data.map(function(d){return {month:d.month, value:d[selectedGroup], rank:d[selectedGroup+' Rank']} })
+      // Give these new data to update line
+      line
+          .datum(dataFilter)
+          .transition()
+          .duration(1000)
+          .attr("d", d3.line()
+            .x(function(d) { return x(d.month) + 30 })
+            .y(function(d) { return y(+d.value) })
+          )
+          .attr("stroke", function(d){ return myColor(selectedGroup) })
+    }
+    // When the button is changed, run the updateChart function
+    d3.select("#selectButton").on("change", function(event,d) {
+        // recover the option that has been chosen
+        const selectedOption = d3.select(this).property("value")
+        // run the updateChart function with this selected option
+        update(selectedOption)
+    })
+
+})
+
+    
+</script>
