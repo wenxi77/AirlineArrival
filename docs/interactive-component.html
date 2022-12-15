@@ -145,7 +145,7 @@ const svg = d3.select("#my_dataviz")
     .attr("transform", `translate(${margin.left},${margin.top})`);
 
 //Read the data
-d3.csv("pre-processed data/wide.csv").then( function(data) {
+d3.csv("https://raw.githubusercontent.com/wenxi77/AirlineArrival/main/pre-processed%20data/wide.csv").then( function(data) {
     // List of groups 
     const allGroup = ["Endeavor Airlines", "American Airlines", "Alaska Airlines", "Jetblue Airlines", "Delta Airlines", "ExpressJet Airlines", "Frontier Airlines", "Allegiant Airlines", "Hawaiian Airlines", "Envoy Airlines", "Spirit Airlines", "PSA Airlines", "SkyWest Airlines", "Horizon Airlines", "United Airlines", "Virgin America Airlines", "Southwest Airlines", "Mesa Airlines", "Republic Airlines"]
     // add the options to the button
